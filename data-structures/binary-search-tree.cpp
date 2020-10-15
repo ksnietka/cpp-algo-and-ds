@@ -43,6 +43,22 @@ class binary_search_tree {
         return find_in_node(root, num);
     }
 
+    int min() {
+        node *current = root;
+        while(current->left != NULL) {
+            current = current->left;
+        };
+        return current->value;
+    }
+
+    int max() {
+        node *current = root;
+        while(current->right != NULL) {
+            current = current->right;
+        };
+        return current->value;
+    }
+
     int find_in_node(node *n, int number) {
         if(!n) return -1;
         if(n->value == number) return number;
@@ -54,8 +70,8 @@ class binary_search_tree {
 
 int main() {
     binary_search_tree bst;
-
-    bst.add(1);
+    
+    bst.add(100);
     bst.add(4);
     bst.add(7);
     bst.add(13);
@@ -63,8 +79,10 @@ int main() {
     bst.add(4);
     bst.add(6);
 
-    cout << bst.find(13) << endl;
-    cout << bst.find(20) << endl;
-    cout << bst.find(1) << endl;
+    // cout << bst.find(13) << endl;
+    // cout << bst.find(20) << endl;
+    // cout << bst.find(1) << endl;
+    cout << bst.min() << endl;
+    cout << bst.max() << endl;
 
 }
