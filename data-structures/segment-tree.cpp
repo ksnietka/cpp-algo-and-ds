@@ -29,12 +29,28 @@ class segment_tree {
         return sum;
     }
 
+    bool is_in_range(node *n, int l, int h) {
+        if ((n-> low <= l && n->high >= l) || (n->low <= h && n->high >= h)) return true;
+        return false;
+    }
+
+    int get_sum(node *n, int l, int h) {
+        if(n->low == l && n->high == h) {
+            return n->sum;
+        } else {
+            int sum = 0;
+            if(is_in_range(n->left, l, h)) sum += get_sum(n->left, l, (h > n->left->high) ? n->left->high : h);
+            if(is_in_range(n->right, l, h)) sum += get_sum(n->right, (l < n->right->low) ? n->right->low : l, h);
+            return sum;
+        }
+    }
+
     void create_node_in_range(node *n, int low, int high) {
         int mid = calculate_mid_point(low, high);
         n->sum = calculate_sum(low, high);
         n->low = low;
         n->high = high;
-        
+
         if(low == high) return;
         n->left = new node();
         n->right = new node();
@@ -60,10 +76,15 @@ class segment_tree {
         show_node(root);
     }
 
+    int get_sum(int low, int high) {
+        return get_sum(root, low, high);
+    }
+
 };
 
 int main () {
-    int arr [] = { 1, 3, 5, 6, 7, 8, 5, 7, 4, 23 };
+    int arr [] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
     segment_tree st(arr, sizeof(arr)/ sizeof(arr[0]));
-    st.display();
+    cout << st.get_sum(0,8) << endl;
+    // st.display();
 }
