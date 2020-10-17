@@ -1,4 +1,5 @@
 #include <iostream>
+#include <chrono>
 
 using namespace std;
 
@@ -80,11 +81,38 @@ class segment_tree {
         return get_sum(root, low, high);
     }
 
+    
+
 };
 
+int sum_in_range(int arr[], int l, int h) {
+    int sum = 0;
+    for(int i = l; i <= h; i++) {
+        sum += arr[i];  
+    }
+    return sum;
+}
+
 int main () {
-    int arr [] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+    int low = 10;
+    int high = 999;
+    int *arr = new int[10000000];
+    for (int i = 0; i < 10000000; i++) {
+        arr[i] = (rand()%100)+1;
+    }
+    auto start = chrono::high_resolution_clock::now();
+    cout << sum_in_range(arr, low, high) << endl;
+    auto end = chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = end - start;
+    
+    cout << elapsed.count() << endl;
     segment_tree st(arr, sizeof(arr)/ sizeof(arr[0]));
-    cout << st.get_sum(0,8) << endl;
+    start = chrono::high_resolution_clock::now();
+    cout << st.get_sum(low,high) << endl;
+
+    end = chrono::high_resolution_clock::now();
+    elapsed = end - start;
+    
+    cout << elapsed.count() << endl;
     // st.display();
 }
